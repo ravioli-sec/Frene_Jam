@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -44,7 +46,9 @@ public class Player : MonoBehaviour
         {
             TeleVisor.SetActive(false);
             General.isTeleporting = false;
+            General.isBlockSeleted = false;
             TeleVisor.transform.position = transform.position;
+            TeleVisor.transform.rotation = transform.rotation;
         }
     }
 }
