@@ -27,12 +27,6 @@ public class BlockBehavior : MonoBehaviour
     {
         _TeleVisor = TeleVisor.VisorInstance.gameObject;
 
-        if (isHovered && Input.GetMouseButtonDown(1) && !General.isBlockSeleted)
-        {
-            isSelected = true;
-            General.isBlockSeleted = true;
-        }
-
         if (isSelected)
         {
             TeleRepere.transform.position = _TeleVisor.transform.position;
@@ -45,6 +39,12 @@ public class BlockBehavior : MonoBehaviour
                 rb.linearVelocity = Vector2.zero;
                 rb.angularVelocity = 0;
             }
+        }
+
+        if (isHovered && Input.GetMouseButtonDown(1) && !General.isBlockSeleted)
+        {
+            isSelected = true;
+            General.isBlockSeleted = true;
         }
 
         if (Input.GetMouseButtonUp(0))

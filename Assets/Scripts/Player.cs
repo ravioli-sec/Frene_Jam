@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private GameObject TeleVisor;
+    [SerializeField] private GameObject Eye;
     private Rigidbody2D rb;
     private InputSystem_Actions action;
 
@@ -41,11 +42,13 @@ public class Player : MonoBehaviour
         if (action.Player.Attack.IsPressed() && Raycast)
         {
             TeleVisor.SetActive(true);
+            Eye.SetActive(false);
             General.isTeleporting = true;
         }
         else
         {
             TeleVisor.SetActive(false);
+            Eye.SetActive(true);
             General.isTeleporting = false;
             General.isBlockSeleted = false;
             TeleVisor.transform.position = transform.position;

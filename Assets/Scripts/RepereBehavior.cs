@@ -11,7 +11,7 @@ public class RepereBehavior : MonoBehaviour
             Block.isHovered = true;
         }
 
-        if (collision.tag != "Player")
+        if (collision.tag != "Player" && collision.tag != "Objective")
         {
             Block.objectsColliding += 1;
         }
@@ -23,7 +23,7 @@ public class RepereBehavior : MonoBehaviour
             Block.isHovered = false;
         }
 
-        if (collision.tag != "Player")
+        if (collision.tag != "Player" && collision.tag != "Objective")
         {
             Block.objectsColliding -= 1;
         }
