@@ -2,29 +2,32 @@ using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using System;
 
 public class BlockBehavior : MonoBehaviour
 {
     [SerializeField] GameObject TeleRepere;
-    [SerializeField] GameObject _TeleVisor;
+    private GameObject _TeleVisor;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private LineRenderer lr;
 
 
-    private bool isHovered;
+    [NonSerialized] public bool isHovered;
     private bool isSelected;
-    private int objectsColliding;
+    [NonSerialized] public int objectsColliding;
 
     private void Awake()
     {
-        _TeleVisor.GetComponent<TeleVisor>().released.AddListener(Deselected);
+        
     }
 
     void Update()
     {
-        if (isHovered && Input.GetMouseButtonDown(1))
+        _TeleVisor = TeleVisor.VisorInstance.gameObject;
+
+        if (isHovered && Input.GetMouseButtonDown(1) && !General.isBlockSeleted)
         {
             isSelected = true;
             General.isBlockSeleted = true;
@@ -44,6 +47,11 @@ public class BlockBehavior : MonoBehaviour
             }
         }
 
+        if (Input.GetMouseButtonUp(0))
+        {
+            Deselected();
+        }
+
         if(objectsColliding != 0)
         {
             sr.color = Color.red;
@@ -57,31 +65,6 @@ public class BlockBehavior : MonoBehaviour
 
         lr.SetPosition(0, transform.position);
         lr.SetPosition(1, TeleRepere.transform.position);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.tag == "Player" && General.isTeleporting)
-        {
-            isHovered = true;
-        }
-
-        if(collision.tag != "Player")
-        {
-            objectsColliding += 1;
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.tag == "Player" && General.isTeleporting)
-        {
-            isHovered = false;
-        }
-
-        if (collision.tag != "Player")
-        {
-            objectsColliding -= 1;
-        }
     }
 
     private void Deselected()

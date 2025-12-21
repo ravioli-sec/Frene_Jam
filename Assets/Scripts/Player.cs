@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         action = new InputSystem_Actions();
         action.Enable();
+        VisorInstanciate();
     }
 
     private void OnDisable()
@@ -50,5 +51,12 @@ public class Player : MonoBehaviour
             TeleVisor.transform.position = transform.position;
             TeleVisor.transform.rotation = transform.rotation;
         }
+    }
+
+    private IEnumerator VisorInstanciate()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        TeleVisor.SetActive(false);
     }
 }

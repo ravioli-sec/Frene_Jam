@@ -7,9 +7,15 @@ using UnityEngine.InputSystem;
 
 public class TeleVisor : MonoBehaviour
 {
+    public static TeleVisor VisorInstance;
+
     [SerializeField] private float speed;
     private InputSystem_Actions action;
-    public UnityEvent released;
+
+    private void Awake()
+    {
+        VisorInstance = this;
+    }
 
     void OnEnable()
     {
@@ -20,7 +26,6 @@ public class TeleVisor : MonoBehaviour
     private void OnDisable()
     {
         action.Disable();
-        released.Invoke();
     }
     void Update()
     {
