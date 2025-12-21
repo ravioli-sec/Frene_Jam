@@ -8,7 +8,10 @@ public class BlockBehavior : MonoBehaviour
     [SerializeField] GameObject TeleRepere;
     [SerializeField] GameObject _TeleVisor;
 
-    public Rigidbody2D rb;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private SpriteRenderer sr;
+    [SerializeField] private LineRenderer lr;
+
 
     private bool isHovered;
     private bool isSelected;
@@ -37,8 +40,23 @@ public class BlockBehavior : MonoBehaviour
                 transform.position = TeleRepere.transform.position;
                 transform.rotation = TeleRepere.transform.rotation;
                 rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0;
             }
         }
+
+        if(objectsColliding != 0)
+        {
+            sr.color = Color.red;
+            sr.color -= new Color(0f, 0f, 0f, 0.5f);
+        }
+        else
+        {
+            sr.color = Color.cyan;
+            sr.color -= new Color(0f, 0f, 0f, 0.5f);
+        }
+
+        lr.SetPosition(0, transform.position);
+        lr.SetPosition(1, TeleRepere.transform.position);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -71,6 +89,5 @@ public class BlockBehavior : MonoBehaviour
         TeleRepere.transform.position = transform.position;
         TeleRepere.transform.rotation = transform.rotation;
         isSelected = false;
-        objectsColliding = 0;
     }
 }
